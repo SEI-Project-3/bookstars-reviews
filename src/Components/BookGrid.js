@@ -1,10 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
-const BookGrid = () => {
+const BookGrid = ({books}) => {
+
     return (
-        <div>
-            <p>this is book grid</p>
-        </div>
+        <section>
+            {books.map((book) => (
+                <Link to={`/books/${book.title}`}> 
+                    <h4>{book.title}</h4>
+                    <h6>{book.author}</h6>
+                    <img src={book.book_image} alt={book.title}/>
+                </Link>
+            ))}
+        </section>
     );
 };
 
