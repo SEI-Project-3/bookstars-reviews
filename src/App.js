@@ -7,13 +7,17 @@ import BookGrid from './Components/BookGrid';
 import BookDetail from './Components/BookDetail';
 
 function App() {
-
-	const [books, setBooks] = useState([])
+	const [books, setBooks] = useState([]);
 
 	useEffect(() => {
-		fetch('http://localhost:3000/api/books')
+		fetch(
+			'https://api.nytimes.com/svc/books/v3/lists/current/combined-print-fiction.json?api-key=Har2JGxlbuOpjx3lnsMAWb4MPCzfGO3u'
+		)
 			.then((res) => res.json())
-			.then((res) => {setBooks(res)})
+			.then((res) => {
+				console.log(res.results);
+				setBooks(res.results.books);
+			})
 			.catch();
 	}, []);
 
@@ -32,7 +36,13 @@ function App() {
 			/> */}
 			<Route
 				path='/books/:title'
-				render={(routerProps) => <BookDetail books={books} setBooks={setBooks} match={routerProps.match} />}
+				render={(routerProps) => (
+					<BookDetail
+						books={books}
+						setBooks={setBooks}
+						match={routerProps.match}
+					/>
+				)}
 			/>
 		</div>
 	);
