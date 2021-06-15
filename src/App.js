@@ -25,25 +25,25 @@ function App() {
 	return (
 		<div className='App'>
 			<Route path='/' render={() => <Header />} />
-     <main>
-			<Route path='/' exact render={() => <Gallery />} />
-			<Route path='/' exact render={() => <BookGrid books={books} />} />
-			{/* <Route
+			<main>
+				<Route path='/' exact render={() => <Gallery />} />
+				<Route path='/' exact render={() => <BookGrid books={books} />} />
+				{/* <Route
 				path='/:genre'
 				render={() => <BookGrid books={books} setBooks={setBooks} />}
 			/> */}
-			<Route
-				path='/books/:title'
-				render={(routerProps) => (
-					<BookDetail
-						books={books}
-						bookDetail={bookDetail}
-						setBookDetails={setBookDetails}
-						match={routerProps.match}
-					/>
-				)}
-			/>
-    </main>
+				<Route
+					path='/books/:title'
+					render={(routerProps) => (
+						<BookDetail
+							books={books}
+							bookDetail={bookDetail}
+							setBookDetails={setBookDetails}
+							match={routerProps.match}
+						/>
+					)}
+				/>
+			</main>
 		</div>
 	);
 }
