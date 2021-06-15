@@ -73,9 +73,9 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 
 	return (
 		<section>
-			<button className='open-modal'>Leave a Review</button>
+			{/* <button className='open-modal'>Leave a Review</button> */}
 			{!bookDetail ? null : (
-				<div className='book-detail'>
+				<aside className='book-detail'>
 					<h1>{bookDetail.title}</h1>
 					<h3>{bookDetail.author}</h3>
 					<img src={bookDetail.book_image} alt={bookDetail.title} />
@@ -86,16 +86,16 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 						rel='noopener noreferrer'>
 						Buy on Amazon
 					</a>
-				</div>
+				</aside>
 			)}
-			<div>
+			<h2>Leave a Review</h2>
+			<container className='leave-review'>
 				<form onSubmit={handleSubmit} className='rating-form'>
-					<h3>Leave a Review</h3>
 					{errText ? (
 						<p>Please leave a rating and review before submitting</p>
 					) : null}
-					<p>Rating:</p>
-					<div className='rate'>
+					{/* <p>Rating:</p> */}
+					<wrapper className='rate'>
 						<input
 							type='radio'
 							id='star5'
@@ -136,9 +136,9 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 							onChange={handleChange}
 						/>
 						<label title='text'>1 star</label>
-					</div>
+					</wrapper>
 					<div className='review'>
-						<p>Your review:</p>
+						{/* <p>Your review:</p> */}
 						<input
 							name='review'
 							type='text'
@@ -149,19 +149,19 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 						<button type='submit'>Submit</button>
 					</div>
 				</form>
+			</container>
+			<div className='Average'>
+				<h4>Average Rating</h4>
+				{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
 			</div>
-			<h4>Average Rating</h4>
-			{!ratings.length ? (
-				<p>This book has not yet been rated.</p>
-			) : (
-				<p>{avgRating}</p>
-			)}
-			<h4>Reviews</h4>
-			{!reviews.length ? (
-				<p>Please leave a review</p>
-			) : (
-				reviews.map((review, i) => <p key={i}>{review}</p>)
-			)}
+			<div className='pastReviews'>
+				<h4>Reviews</h4>
+				{!reviews.length ? (
+					<p>Please leave a review</p>
+				) : (
+					reviews.map((review, i) => <p key={i}>{review}</p>)
+				)}
+			</div>
 		</section>
 	);
 };
