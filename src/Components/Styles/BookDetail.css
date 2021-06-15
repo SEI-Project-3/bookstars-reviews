@@ -38,3 +38,71 @@
 .rate > label:hover ~ input:checked ~ label {
 	color: #474544;
 }
+
+/* ==== ^ RATINGS ^ ==== */
+
+/* whole page  */
+section {
+	display: grid;
+	grid-template-columns: [left] auto [right] auto;
+
+	grid-template-rows: [top] 50px [second] auto [middle] auto [last];
+
+	padding: 1%;
+}
+
+/* == LEFT == */
+
+/* book title */
+h1 {
+	grid-column: left;
+	grid-row: top;
+	font-family: Poppins;
+}
+
+/* details of book */
+/* aside {
+	grid-column: left;
+	grid-row: middle;
+} */
+
+/* cover image */
+aside img {
+	grid-column: left;
+	grid-row: middle;
+}
+
+/* desc */
+
+/* buy link */
+
+/* == RIGHT == */
+
+/* avg rating */
+.Average {
+	grid-column: right;
+	grid-row: top;
+}
+
+/* 'leave a review' */
+h2 {
+	grid-column: right;
+	grid-row: second;
+	font-family: Poppins;
+}
+
+/* review form */
+container {
+	grid-column: right;
+}
+
+/* list of past reviews */
+.pastReviews {
+	grid-column: span 2;
+	grid-row: last;
+}
+
+h3 /* 'author' */,
+h4 /* 'reviews' */ {
+	font-family: Poppins;
+}
