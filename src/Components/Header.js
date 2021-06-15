@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './images/logo.png';
-// import SearchIcon from './images/SearchIcon.png';
 import './Styles/Header.css';
 
 const Header = () => {
@@ -34,22 +33,23 @@ const Header = () => {
 						placeholder='Search for a book'
 					/>
 				</form>
-				<Link to={`/fiction`} key='{name}' className='navLinks'>
-					Fiction
-				</Link>
-				<Link to={`/nonfiction`} key='{name}' className='navLinks'>
-					Nonfiction
-				</Link>
-				<Link to={`/childrens`} key='{name}' className='navLinks'>
-					Children's
-				</Link>
-				<Link to={`/culture`} key='{name}' className='navLinks'>
-					Culture
-				</Link>
-				<Link to={`/education`} key='{name}' className='navLinks'>
-					Education
-				</Link>
+      <Link to={`/fiction`} className='navLinks'>
+				Fiction
+			</Link>
+			<Link to={`/nonfiction`} className='navLinks'>
+				Nonfiction
+			</Link>
+			<Link to={`/childrens`} className='navLinks'>
+				Children's
+			</Link>
+			<Link to={`/culture`} className='navLinks'>
+				Culture
+			</Link>
+			<Link to={`/education`} className='navLinks'>
+				Education
+			</Link>
 			</nav>
+
 		</div>
 	);
 };
