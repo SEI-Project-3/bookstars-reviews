@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Logo from './images/logo.png';
+import './Styles/Header.css';
 
 const Header = () => {
 	// const filterByList = (listName) => {
@@ -17,18 +19,21 @@ const Header = () => {
 	// };
 	return (
 		<div>
-			<Link to='/'>
-				<h1>Book App</h1>
-			</Link>
-			<form>
-				<input
-					type='text'
-					className='inputSearch'
-					// onChange={search}
-					placeholder='Search for a book by title, author, ...'
-				/>
-			</form>
-			<Link to={`/fiction`} className='navLinks'>
+			<div className='headbar'>
+				<Link to='/'>
+					<img src={Logo} alt='Bookstars' className='logo' />
+				</Link>
+			</div>
+			<nav>
+				<form>
+					<input
+						type='text'
+						className='inputSearch'
+						// onChange={search}
+						placeholder='Search for a book'
+					/>
+				</form>
+      <Link to={`/fiction`} className='navLinks'>
 				Fiction
 			</Link>
 			<Link to={`/nonfiction`} className='navLinks'>
@@ -43,6 +48,8 @@ const Header = () => {
 			<Link to={`/education`} className='navLinks'>
 				Education
 			</Link>
+			</nav>
+
 		</div>
 	);
 };

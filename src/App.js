@@ -25,6 +25,7 @@ function App() {
 	return (
 		<div className='App'>
 			<Route path='/' render={() => <Header />} />
+     <main>
 			<Route path='/' exact render={() => <Gallery />} />
 			<Route path='/' exact render={() => <BookGrid books={books} />} />
 			{/* <Route
@@ -42,6 +43,7 @@ function App() {
 					/>
 				)}
 			/>
+    </main>
 		</div>
 	);
 }
