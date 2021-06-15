@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-const BookDetail = ({ books, match }) => {
+const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const history = useHistory();
 	const bookTitle = match.params.title;
-	const [bookDetail, setBookDetails] = useState('');
 	const [reviews, setReviews] = useState([]);
 	const [ratings, setRatings] = useState([]);
 	const [bookObj, setBookObj] = useState({
@@ -13,43 +12,38 @@ const BookDetail = ({ books, match }) => {
 		rating: '',
 	});
 	const [error, setError] = useState(false);
+	const [errText, setErrText] = useState(false);
 	const [avgRating, setAvgRating] = useState(0);
 
 	useEffect(() => {
-		books.forEach((book, i) => {
-			if (book.title == bookTitle) {
-				setBookDetails(books[i]);
-			}
-		});
+		if (books.length) {
+			books.forEach((book, i) => {
+				if (book.title === bookTitle) {
+					setBookDetails(books[i]);
+				}
+			});
 
-		fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
-			.then((res) => res.json())
-			.then((res) => {
-				console.log(ratings);
-				if (res.ratings) {
-					setRatings(res.ratings);
-				}
-				if (res.reviews) {
-					setReviews(res.reviews);
-				}
-			})
-			.then((res) => {
-				if (res.ratings) {
-					setAvgRating(ratings.reduce((a, b) => (a + b) / 2));
-				}
-			})
-			.catch();
-	}, []);
+			fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
+				.then((res) => res.json())
+				.then((res) => {
+					if (res?.ratings) {
+						setRatings(res.ratings);
+					}
+					if (res?.reviews) {
+						setReviews(res.reviews);
+					}
+				})
+				.catch();
+		}
+	}, [books]);
 
-	// if (!reviews) {
-	// 	return 'there are no ratings available';
-	// }
-	// if (!ratings) {
-	// 	return 'there are no ratings available';
-	// }
-	// if (!avgRating) {
-	// 	return 'there are no ratings available';
-	// }
+	useEffect(() => {
+		if (ratings.length === 1) {
+			setAvgRating(ratings[0]);
+		} else if (ratings.length > 1) {
+			setAvgRating(ratings.reduce((a, b) => (a + b) / 2));
+		}
+	}, [ratings, reviews]);
 
 	const handleChange = (event) => {
 		setBookObj({ ...bookObj, [event.target.name]: event.target.value });
@@ -57,6 +51,10 @@ const BookDetail = ({ books, match }) => {
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
+		if (!bookObj.review || !bookObj.rating) {
+			setErrText(true);
+			return;
+		}
 		const url = `http://localhost:3000/api/books/title/${bookTitle}`;
 		fetch(url, {
 			method: 'PATCH',
@@ -67,8 +65,7 @@ const BookDetail = ({ books, match }) => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				console.log(data);
-				//history.push(`/books/${data.title}`)
+				history.push(`/books/${data.title}`);
 			})
 			.catch((err) => setError(true));
 	};
@@ -76,16 +73,26 @@ const BookDetail = ({ books, match }) => {
 	return (
 		<section>
 			<button className='open-modal'>Leave a Review</button>
-			<div className='book-detail'>
-				<h1>{bookDetail.title}</h1>
-				<h3>{bookDetail.author}</h3>
-				<img src={bookDetail.book_image} alt={bookDetail.title} />
-				<p>{bookDetail.description}</p>
-				<Link to={bookDetail.amazon_product_url}>Buy on Amazon</Link>
-			</div>
+			{!bookDetail ? null : (
+				<div className='book-detail'>
+					<h1>{bookDetail.title}</h1>
+					<h3>{bookDetail.author}</h3>
+					<img src={bookDetail.book_image} alt={bookDetail.title} />
+					<p>{bookDetail.description}</p>
+					<a
+						href={bookDetail.amazon_product_url}
+						target='_blank'
+						rel='noopener noreferrer'>
+						Buy on Amazon
+					</a>
+				</div>
+			)}
 			<div>
 				<form onSubmit={handleSubmit} className='rating-form'>
 					<h3>Leave a Review</h3>
+					{errText ? (
+						<p>Please leave a rating and review before submitting</p>
+					) : null}
 					<p>Rating:</p>
 					<div className='rate'>
 						<input
@@ -95,9 +102,7 @@ const BookDetail = ({ books, match }) => {
 							value='5'
 							onChange={handleChange}
 						/>
-						<label for='star5' title='text'>
-							5 stars
-						</label>
+						<label title='text'>5 stars</label>
 						<input
 							type='radio'
 							id='star4'
@@ -105,9 +110,7 @@ const BookDetail = ({ books, match }) => {
 							value='4'
 							onChange={handleChange}
 						/>
-						<label for='star4' title='text'>
-							4 stars
-						</label>
+						<label title='text'>4 stars</label>
 						<input
 							type='radio'
 							id='star3'
@@ -115,9 +118,7 @@ const BookDetail = ({ books, match }) => {
 							value='3'
 							onChange={handleChange}
 						/>
-						<label for='star3' title='text'>
-							3 stars
-						</label>
+						<label title='text'>3 stars</label>
 						<input
 							type='radio'
 							id='star2'
@@ -125,9 +126,7 @@ const BookDetail = ({ books, match }) => {
 							value='2'
 							onChange={handleChange}
 						/>
-						<label for='star2' title='text'>
-							2 stars
-						</label>
+						<label title='text'>2 stars</label>
 						<input
 							type='radio'
 							id='star1'
@@ -135,9 +134,7 @@ const BookDetail = ({ books, match }) => {
 							value='1'
 							onChange={handleChange}
 						/>
-						<label for='star1' title='text'>
-							1 star
-						</label>
+						<label title='text'>1 star</label>
 					</div>
 					<div className='review'>
 						<p>Your review:</p>
@@ -153,11 +150,17 @@ const BookDetail = ({ books, match }) => {
 				</form>
 			</div>
 			<h4>Average Rating</h4>
-			<p>{avgRating}</p>
+			{!ratings.length ? (
+				<p>This book has not yet been rated.</p>
+			) : (
+				<p>{avgRating}</p>
+			)}
 			<h4>Reviews</h4>
-			{reviews.map((review) => (
-				<p>{review}</p>
-			))}
+			{!reviews.length ? (
+				<p>Please leave a review</p>
+			) : (
+				reviews.map((review, i) => <p key={i}>{review}</p>)
+			)}
 		</section>
 	);
 };

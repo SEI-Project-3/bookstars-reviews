@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-
 const Header = () => {
 	// const filterByList = (listName) => {
 	// 	const filteredState = bookData.filter((book) => book.listName === listName);
@@ -29,19 +28,19 @@ const Header = () => {
 					placeholder='Search for a book by title, author, ...'
 				/>
 			</form>
-			<Link to={`/fiction`} key='{name}' className='navLinks'>
+			<Link to={`/fiction`} className='navLinks'>
 				Fiction
 			</Link>
-			<Link to={`/nonfiction`} key='{name}' className='navLinks'>
+			<Link to={`/nonfiction`} className='navLinks'>
 				Nonfiction
 			</Link>
-			<Link to={`/childrens`} key='{name}' className='navLinks'>
+			<Link to={`/childrens`} className='navLinks'>
 				Children's
 			</Link>
-			<Link to={`/culture`} key='{name}' className='navLinks'>
+			<Link to={`/culture`} className='navLinks'>
 				Culture
 			</Link>
-			<Link to={`/education`} key='{name}' className='navLinks'>
+			<Link to={`/education`} className='navLinks'>
 				Education
 			</Link>
 		</div>
