@@ -1,0 +1,75 @@
+.Header {
+	display: block;
+	width: 100%;
+	background-color: #71aca0;
+}
+
+/* top half */
+.headbar {
+	display: block;
+	width: 100%;
+	background-color: #71aca0;
+	padding-left: 40px;
+}
+
+.headbar img {
+	max-height: 50px;
+	padding: 5px 0;
+}
+
+/* bottom half */
+nav {
+	width: 100%;
+	height: 40px;
+	display: inline-flex;
+	flex-flow: row nowrap;
+	justify-content: space-evenly;
+	align-items: center;
+	align-content: center;
+	background-color: #81b7ac;
+	padding: 0px 5px;
+}
+
+/* links */
+nav a:link {
+	flex-grow: 1;
+	color: #474544;
+	font-family: Roboto;
+	font-weight: medium;
+	font-size: 18pt;
+	text-decoration: none;
+	text-align: center;
+	padding: 5px;
+}
+/* visited */
+nav a:visited {
+	color: #474544;
+}
+/* hover/active */
+nav a:hover,
+nav a:active {
+	background-color: #b1d8d0;
+	transition: background 400ms ease-in-out;
+}
+
+/* searchbar */
+form {
+	flex-grow: 2;
+	padding: 0 3%;
+}
+input {
+	white-space: nowrap;
+	padding: 0.4em 1em;
+	width: 100%;
+	background-color: #dcf5f0;
+	border: 2px solid #71aca0;
+	border-radius: 30px;
+	overflow: hidden;
+	color: #3d7a6e;
+}
+/* .search-icon {
+	position: absolute;
+	top: 6px;
+	left: 8px;
+	width: 14px;
+} */
