@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 
-const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
+const GoogleBook = ({ match, bookDetail, setBookDetails }) => {
 	const history = useHistory();
 	const bookTitle = match.params.title;
 	const [reviews, setReviews] = useState([]);
@@ -16,30 +16,29 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const [avgRating, setAvgRating] = useState(0);
 
 	useEffect(() => {
-		if (books.length) {
-			books.forEach((book, i) => {
-				if (book.title === bookTitle) {
-					setBookDetails(books[i]);
-					localStorage.setItem('book', JSON.stringify(books[i]));
-				}
-			});
+		// if (books.length) {
+		// 	books.forEach((book, i) => {
+		// 		if (book.title === bookTitle) {
+		// 			setBookDetails(books[i]);
+		// 		}
+		// 	});
 
-			fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
-				.then((res) => res.json())
-				.then((res) => {
-					if (res?.ratings) {
-						setRatings(res.ratings);
-					}
-					if (res?.reviews) {
-						setReviews(res.reviews);
-					}
-				})
-				.catch();
-		} else if (localStorage.getItem('book')) {
+		if (localStorage.getItem('book')) {
 			const newBook = localStorage.getItem('book');
 			setBookDetails(JSON.parse(newBook));
 		}
-	}, [books]);
+		fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
+			.then((res) => res.json())
+			.then((res) => {
+				if (res?.ratings) {
+					setRatings(res.ratings);
+				}
+				if (res?.reviews) {
+					setReviews(res.reviews);
+				}
+			})
+			.catch();
+	}, []);
 
 	useEffect(() => {
 		if (ratings.length === 1) {
@@ -79,14 +78,14 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			{!bookDetail ? null : (
 				<div className='book-detail'>
 					<h1>{bookDetail.title}</h1>
-					<h3>{bookDetail.author}</h3>
-					<img src={bookDetail.book_image} alt={bookDetail.title} />
+					<h3>{bookDetail.authors[0]}</h3>
+					<img src={bookDetail.imageLinks.thumbnail} alt={bookDetail.title} />
 					<p>{bookDetail.description}</p>
 					<a
-						href={bookDetail.amazon_product_url}
+						href={bookDetail.infoLink}
 						target='_blank'
 						rel='noopener noreferrer'>
-						Buy on Amazon
+						Check out on Google
 					</a>
 				</div>
 			)}
@@ -168,4 +167,4 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	);
 };
 
-export default BookDetail;
+export default GoogleBook;
