@@ -75,37 +75,34 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	};
 
 	return (
-		<>
-			<section>
-				{/* <button className='open-modal'>Leave a Review</button> */}
-				{!bookDetail ? null : (
-					<aside>
-						<img src={bookDetail.book_image} alt={bookDetail.title} />
-						<div className='book-detail'>
-							<h1>{bookDetail.title}</h1>
-							<h3>{bookDetail.author}</h3>
-							<p>{bookDetail.description}</p>
-							<a
-								href={bookDetail.amazon_product_url}
-								target='_blank'
-								rel='noopener noreferrer'>
-								Buy on Amazon
-							</a>
-						</div>
-					</aside>
-				)}
-				<div className='reviewBox'>
-					<container className='leave-review'>
-						<div className='Average'>
-							<h4>Average Rating</h4>
-							{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
-						</div>
+		<section>
+			{/* <button className='open-modal'>Leave a Review</button> */}
+			{!bookDetail ? null : (
+				<>
+					<img
+						className='cover'
+						src={bookDetail.book_image}
+						alt={bookDetail.title}
+					/>
+					<div className='book-detail'>
+						<h1>{bookDetail.title}</h1>
+						<h3>{bookDetail.author}</h3>
+						<p>{bookDetail.description}</p>
+						<a
+							href={bookDetail.amazon_product_url}
+							target='_blank'
+							rel='noopener noreferrer'>
+							Buy on Amazon
+						</a>
+					</div>
+
+					<aside className='leave-review'>
 						<h2>Leave a Review</h2>
 						<form onSubmit={handleSubmit} className='rating-form'>
 							{errText ? (
 								<p>Please leave a rating and review before submitting</p>
 							) : null}
-							{/* <p>Rating:</p> */}
+
 							<wrapper className='stars'>
 								<input
 									type='radio'
@@ -149,8 +146,11 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 								<label title='text'>1 star</label>
 							</wrapper>
 							<br />
+							<div className='Average'>
+								<h4>Average Rating</h4>
+								{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
+							</div>
 							<div className='review'>
-								{/* <p>Your review:</p> */}
 								<textarea
 									name='review'
 									className='review-text'
@@ -161,18 +161,20 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 								<button type='submit'> 🖋️ </button>
 							</div>
 						</form>
-					</container>
-				</div>
-				<div className='pastReviews'>
-					<h4>Reviews</h4>
-					{!reviews.length ? (
-						<p>Please leave a review</p>
-					) : (
-						reviews.map((review, i) => <p key={i}>{review}</p>)
-					)}
-				</div>
-			</section>
-		</>
+					</aside>
+				</>
+			)}
+			{/* <container className='bottom'> */}
+			<div className='past-reviews'>
+				<h3>Reviews</h3>
+				{!reviews.length ? (
+					<p>Please leave a review</p>
+				) : (
+					reviews.map((review, i) => <p key={i}>{review}</p>)
+				)}
+			</div>
+			{/* </container> */}
+		</section>
 	);
 };
 
