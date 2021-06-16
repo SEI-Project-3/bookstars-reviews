@@ -154,7 +154,7 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 								onChange={handleChange}
 							/>
 							<br />
-							<button type='submit'>Submit</button>
+							<button type='submit'> 🖋️ </button>
 						</div>
 					</form>
 				</container>
