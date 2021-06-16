@@ -65,6 +65,17 @@ h6 {
 	font-family: Poppins;
 }
 
+a {
+	font-family: 'Poppins';
+	color: #71aca0;
+	letter-spacing: 3px;
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: #e6e2e0;
+}
+
 h1 {
 	font-size: 32pt;
 	font-weight: lighter;

@@ -76,7 +76,6 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 
 	return (
 		<section>
-			{/* <button className='open-modal'>Leave a Review</button> */}
 			{!bookDetail ? null : (
 				<>
 					<img

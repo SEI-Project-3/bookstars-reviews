@@ -5,7 +5,7 @@
 }
 .stars {
 	float: left;
-	height: 46px;
+	height: 36px;
 	padding: 0 10px;
 }
 .stars:not(:checked) > input {
@@ -75,13 +75,13 @@ section {
 .book-detail {
 	width: 30%;
 	padding: 0;
-	margin: 0;
+	margin: 0 15px 0 15px;
 }
 
 .book-detail div {
 	display: flex;
 	flex-flow: column wrap;
-	align-content: space-around;
+	align-content: stretch;
 }
 
 .book-detail h1 {
@@ -116,8 +116,12 @@ section {
 	flex-flow: column nowrap;
 }
 
-.Average {
+.leave-review h2 {
 	padding: 2%;
+}
+
+.Average {
+	padding: 3%;
 }
 
 .leave-review form {
@@ -139,7 +143,7 @@ section {
 .leave-review textarea {
 	width: 100%;
 	min-height: 100px;
-	padding: 3px;
+	padding: 5px;
 }
 
 .leave-review button {

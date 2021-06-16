@@ -8,7 +8,8 @@
 .headbar {
 	width: 100%;
 	background-color: #71aca0;
-	padding-left: 40px;
+	padding-left: 60px;
+	padding-right: 60px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -17,15 +18,16 @@
 .headbar img {
 	max-height: 50px;
 	padding: 5px 0;
-	/* grid-area: 2; */
+}
+
+.headbar img:hover {
+	background-color: #71aca0;
+}
+.headbar a:hover {
+	background-color: #71aca0;
 }
 
 /* searchbar */
-.searchbar form {
-	/* grid-column: 3; */
-	/* justify-self: flex-end; */
-}
-
 .inputSearch {
 	grid-column: 4;
 	white-space: nowrap;
