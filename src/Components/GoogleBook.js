@@ -12,6 +12,7 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 	const [avgRating, setAvgRating] = useState(0);
 	const [editState, setEditState] = useState(-1);
 	const [editText, setEditText] = useState('');
+	const [newState, setNewState] = useState(false);
 
 	useEffect(() => {
 		if (localStorage.getItem('book') && !bookDetail) {
@@ -20,7 +21,9 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 		}
 		//http://localhost:3000/api/books/title/${bookTitle}
 		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
-		fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
+		fetch(
+			`https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`
+		)
 			.then((res) => res.json())
 			.then((res) => {
 				if (res?.ratings) {
@@ -31,7 +34,7 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 				}
 			})
 			.catch();
-	}, [bookDetail]);
+	}, [bookDetail, newState]);
 
 	useEffect(() => {
 		if (ratings.length === 1) {
@@ -49,7 +52,7 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 		};
 		//http://localhost:3000/api/books/title/${bookTitle}
 		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
-		const url = `http://localhost:3000/api/books/title/${bookTitle}`;
+		const url = `https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`;
 		fetch(url, {
 			method: 'PATCH',
 			headers: {
@@ -59,7 +62,7 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				history.push(`/search/${data.title}`);
+				setNewState(!newState);
 			})
 			.catch((err) => setError(true));
 	};
@@ -69,8 +72,8 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 	};
 
 	const handleSubmit = (event) => {
+		event.preventDefault();
 		if (!formState.review || !formState.rating) {
-			event.preventDefault();
 			setErrText(true);
 			return;
 		}
