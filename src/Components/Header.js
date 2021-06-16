@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Logo from './images/logo.png';
 import './Styles/Header.css';
 
-const Header = () => {
-	// const filterByList = (listName) => {
-	// 	const filteredState = bookData.filter((book) => book.listName === listName);
-	// 	const finalState = filteredState.map((one) => {
-	// 		return one.name;
-	// 	});
-	// 	setChampNames(finalState);
-	// };
-	// const search = (e) => {
-	// 	const filteredState = extraStateArray.filter((book) =>
-	// 		book.toLowerCase().startsWith(e.target.value.toLowerCase())
-	// 	);
-	// 	setStateThing(filteredState);
-	// };
+const Header = ({ setBookDetails, bookDetail, history }) => {
+	const [bookState, setBookState] = useState('');
+
+	const search = (e) => {
+		e.preventDefault();
+
+		setBookState(e.target.value);
+	};
+
+	const handleSubmit = (event) => {
+		event.preventDefault();
+		fetch(
+			`https://www.googleapis.com/books/v1/volumes?q=intitle:${bookState}&key=AIzaSyCbwixLUo_AQ7vhv3MnioBwURJEZ3n8jng`
+		)
+			.then((res) => res.json())
+			.then((res) => {
+				setBookDetails(res.items[0].volumeInfo);
+				localStorage.setItem('book', JSON.stringify(res.items[0].volumeInfo));
+				history.push(`/search/${res.items[0].volumeInfo.title}`);
+			})
+			.catch();
+	};
+
 	return (
 		<div>
 			<div className='headbar'>
@@ -25,31 +34,32 @@ const Header = () => {
 				</Link>
 			</div>
 			<nav>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<input
 						type='text'
+						name='search'
+						onChange={search}
 						className='inputSearch'
-						// onChange={search}
 						placeholder='Search for a book'
 					/>
+					<input type='submit' value='Search' />
 				</form>
-      <Link to={`/fiction`} className='navLinks'>
-				Fiction
-			</Link>
-			<Link to={`/nonfiction`} className='navLinks'>
-				Nonfiction
-			</Link>
-			<Link to={`/childrens`} className='navLinks'>
-				Children's
-			</Link>
-			<Link to={`/culture`} className='navLinks'>
-				Culture
-			</Link>
-			<Link to={`/education`} className='navLinks'>
-				Education
-			</Link>
+				<Link to={`/fiction`} className='navLinks'>
+					Fiction
+				</Link>
+				<Link to={`/nonfiction`} className='navLinks'>
+					Nonfiction
+				</Link>
+				<Link to={`/youngadult`} className='navLinks'>
+					Young Adult
+				</Link>
+				<Link to={`/middlegrade`} className='navLinks'>
+					Middle Grade
+				</Link>
+				<Link to={`/childrens`} className='navLinks'>
+					Childrens
+				</Link>
 			</nav>
-
 		</div>
 	);
 };

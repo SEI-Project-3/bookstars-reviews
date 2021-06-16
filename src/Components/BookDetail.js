@@ -21,6 +21,7 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			books.forEach((book, i) => {
 				if (book.title === bookTitle) {
 					setBookDetails(books[i]);
+					localStorage.setItem('book', JSON.stringify(books[i]));
 				}
 			});
 
@@ -35,6 +36,9 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 					}
 				})
 				.catch();
+		} else if (localStorage.getItem('book')) {
+			const newBook = localStorage.getItem('book');
+			setBookDetails(JSON.parse(newBook));
 		}
 	}, [books]);
 
@@ -51,7 +55,6 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	};
 
 	const handleSubmit = (event) => {
-		event.preventDefault();
 		if (!bookObj.review || !bookObj.rating) {
 			setErrText(true);
 			return;
