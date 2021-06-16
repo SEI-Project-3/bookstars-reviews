@@ -1,70 +1,20 @@
-# Getting Started with Create React App
+# Bookstars - Reviews & Ratings
+Bookstars is a MERN stack app allowing users to review and get information on NYT bestselling books and any other book to their hearts' content. 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![wireframes 01](https://user-images.githubusercontent.com/81989356/122264605-b6661080-cea5-11eb-9faf-656afe7321f2.png)
 
-## Available Scripts
+![wireframes02](https://user-images.githubusercontent.com/81989356/122264619-b9610100-cea5-11eb-90bb-05ac39e2d715.png)
 
-In the project directory, you can run:
+## Technologies Used 
+As an app utilizing the MERN stack, we used Mongo/Mongoose, Express, React, and Node to create our app.  We also made use of two third-party APIs: The NYT's Bestsellers and Google Books API.
 
-### `npm start`
+## Getting Started
+There are a number of ways to navigate our app! On the homepage, you can view the bestselling fiction books for that week.  Using our navigation bar, you can look at the top 15 best-selling books for 5 categories: Fiction, Nonfiction, Young Adult, Middle Grades, and Children.
+Using our search function, you can search for any book you would like, and it will generate the information for you.  When using the search feature, be as specific as possible about your book -- this will generate the most accurate result.
+Once you've navigated to a book's detail page (either through clicking on one or by searching for one), you can view basic inforamtion about the book, as well as any ratings and reviews that have been left so far. You can also add your own and see it populate to the page in real-time.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Contribution Guidelines
+If you'd like to give feedback about this project, please do so via an issue.  We welcome your comments and ideas!
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Acknowledgements
+Special thanks to James Barnett, creator of the Pure CSS Star Rating Widget. His widget is featured on our site.
