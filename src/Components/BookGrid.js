@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Styles/BookGrid.css';
 
@@ -33,11 +33,10 @@ const BookGrid = ({ extra, setExtra, setBooks, books, match }) => {
 
 	useEffect(() => {
 		fetch(
-			`https://api.nytimes.com/svc/books/v3/lists/current/${genreUrl}.json?api-key=Har2JGxlbuOpjx3lnsMAWb4MPCzfGO3u`
+			`https://api.nytimes.com/svc/books/v3/lists/current/${genreUrl}.json?api-key=${process.env.REACT_APP_NY_TIMES_API_KEY}`
 		)
 			.then((res) => res.json())
 			.then((res) => {
-				console.log(res.results);
 				setBooks(res.results.books);
 			})
 			.catch();
