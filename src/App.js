@@ -26,19 +26,59 @@ function App() {
 
 	return (
 		<div className='App'>
-			<Route path='/' render={() => <Header />} />
+			<Route
+				path='/'
+				render={(routerProps) => (
+					<Header
+						bookDetail={bookDetail}
+						setBookDetails={setBookDetails}
+						{...routerProps}
+					/>
+				)}
+			/>
 			<main>
 				<Route path='/' exact render={() => <Gallery />} />
-				<Route path='/' exact render={() => <BookGrid books={books} />} />
-				{/* <Route
-				path='/:genre'
-				render={() => <BookGrid books={books} setBooks={setBooks} />}
-			/> */}
+				<Route
+					path='/'
+					exact
+					render={() => (
+						<BookGrid
+							books={books}
+							setBooks={setBooks}
+							extra={extra}
+							setExtra={setExtra}
+						/>
+					)}
+				/>
+				<Route
+					path='/:genre'
+					exact
+					render={(routerProps) => (
+						<BookGrid
+							match={routerProps.match}
+							books={books}
+							setBooks={setBooks}
+							extra={extra}
+							setExtra={setExtra}
+						/>
+					)}
+				/>
 				<Route
 					path='/books/:title'
 					render={(routerProps) => (
 						<BookDetail
 							books={books}
+							bookDetail={bookDetail}
+							setBookDetails={setBookDetails}
+							match={routerProps.match}
+						/>
+					)}
+				/>
+				<Route
+					exact
+					path='/search/:title'
+					render={(routerProps) => (
+						<GoogleBook
 							bookDetail={bookDetail}
 							setBookDetails={setBookDetails}
 							match={routerProps.match}
