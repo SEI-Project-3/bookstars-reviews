@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/bookstars-reviews/static/css/main.bbb363e9.chunk.css",
+    "main.js": "/bookstars-reviews/static/js/main.34f7ebb0.chunk.js",
+    "main.js.map": "/bookstars-reviews/static/js/main.34f7ebb0.chunk.js.map",
+    "runtime-main.js": "/bookstars-reviews/static/js/runtime-main.00a25fe9.js",
+    "runtime-main.js.map": "/bookstars-reviews/static/js/runtime-main.00a25fe9.js.map",
+    "static/js/2.aec82e57.chunk.js": "/bookstars-reviews/static/js/2.aec82e57.chunk.js",
+    "static/js/2.aec82e57.chunk.js.map": "/bookstars-reviews/static/js/2.aec82e57.chunk.js.map",
+    "index.html": "/bookstars-reviews/index.html",
+    "static/css/main.bbb363e9.chunk.css.map": "/bookstars-reviews/static/css/main.bbb363e9.chunk.css.map",
+    "static/js/2.aec82e57.chunk.js.LICENSE.txt": "/bookstars-reviews/static/js/2.aec82e57.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.00a25fe9.js",
+    "static/js/2.aec82e57.chunk.js",
+    "static/css/main.bbb363e9.chunk.css",
+    "static/js/main.34f7ebb0.chunk.js"
+  ]
+}
