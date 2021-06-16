@@ -57,52 +57,75 @@ section {
 
 	display: grid;
 
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: auto auto;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	/* grid-template-areas:
+		'image description review'
+		'. history .'; */
 
 	column-gap: 5%;
-	row-gap: 8%;
+	justify-items: center;
 }
 
 /* == LEFT == */
 
 /* details of book */
-.book-detail aside {
+
+/* .book-detail aside {
+	grid-area: 
+} */
+
+/* cover image */
+.book-detail img {
+	/* grid-area: 'image'; */
 	grid-column: 1;
-	grid-row: 1 / 2;
+	grid-row: 1;
+	width: 100%;
+	height: auto%;
+}
+
+.book-detail div {
+	/* grid-area: 'description'; */
+	grid-column: 2;
+	grid-row: 1;
 }
 
 /* book title */
-.book-detail h1 {
-}
+/* .book-detail h1 {
+	grid-area: 'description';
+} */
+
 /* author */
 .book-detail h3 {
 	font-family: Poppins;
 }
 
-/* cover image */
-.book-detail img {
-}
-
 /* desc */
-.book-detail p {
-}
+/* .book-detail p {
+	align-self: end;
+} */
 
 /* buy link */
-.book-detail a {
-}
+/* .book-detail a {
+	grid-area: link;
+	align-self: end;
+} */
 
 /* == RIGHT == */
 
 /* review form (stars) (text) */
-container {
-	width: 100%;
-	background-color: #e6e2e0;
-	padding: 5%;
-	border-radius: 15px;
+.reviewBox div {
+	grid-column: 3;
+	grid-row: 1;
+	height: 100%;
+}
 
-	grid-column: 2;
-	grid-row: 1 / 2;
+.reviewBox container {
+	content: 100%;
+	height: 90%;
+	background-color: #e6e2e0;
+	padding: 8%;
+	border-radius: 15px;
 
 	display: grid;
 	align-items: bottom;
@@ -126,6 +149,7 @@ container {
 .leave-review h2 {
 	font-family: Poppins;
 	grid-column: 1;
+	align-self: top;
 }
 
 .leave-review form {
@@ -138,33 +162,35 @@ container {
 .stars {
 	display: block;
 	align-self: flex-start;
+	padding-bottom: 2%;
 }
 
 .leave-review textarea {
-	/* padding: 2%; */
-	width: 85%;
-	height: 85%;
+	width: 100%;
+	min-height: 100px;
+	padding: 3px;
 }
 
 .leave-review button {
 	padding: 2%;
-	margin: 2%;
+	/* margin: 2%; */
 	font-size: 35px;
 	background-color: #e6e2e0;
 	border: none;
 	border-radius: 35px;
+	align-self: bottom;
 }
 
 .leave-review button:hover {
 	background-color: #f5f3f2;
-	align-self: bottom;
 }
 
 /* === */
 
 /* list of past reviews */
 .pastReviews {
-	grid-column: 1 / 2;
+	/* grid-area: 'history'; */
+	grid-column: 2;
 	grid-row: 2;
 }
 

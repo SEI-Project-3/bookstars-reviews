@@ -79,85 +79,90 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			<section>
 				{/* <button className='open-modal'>Leave a Review</button> */}
 				{!bookDetail ? null : (
-					<aside className='book-detail'>
-						<h1>{bookDetail.title}</h1>
-						<h3>{bookDetail.author}</h3>
+					<aside>
 						<img src={bookDetail.book_image} alt={bookDetail.title} />
-						<p>{bookDetail.description}</p>
-						<a
-							href={bookDetail.amazon_product_url}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Buy on Amazon
-						</a>
+						<div className='book-detail'>
+							<h1>{bookDetail.title}</h1>
+							<h3>{bookDetail.author}</h3>
+							<p>{bookDetail.description}</p>
+							<a
+								href={bookDetail.amazon_product_url}
+								target='_blank'
+								rel='noopener noreferrer'>
+								Buy on Amazon
+							</a>
+						</div>
 					</aside>
 				)}
-				<container className='leave-review'>
-					<div className='Average'>
-						<h4>Average Rating</h4>
-						{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
-					</div>
-					<h2>Leave a Review</h2>
-					<form onSubmit={handleSubmit} className='rating-form'>
-						{errText ? (
-							<p>Please leave a rating and review before submitting</p>
-						) : null}
-						{/* <p>Rating:</p> */}
-						<wrapper className='stars'>
-							<input
-								type='radio'
-								id='star5'
-								name='rating'
-								value='5'
-								onChange={handleChange}
-							/>
-							<label title='text'>5 stars</label>
-							<input
-								type='radio'
-								id='star4'
-								name='rating'
-								value='4'
-								onChange={handleChange}
-							/>
-							<label title='text'>4 stars</label>
-							<input
-								type='radio'
-								id='star3'
-								name='rating'
-								value='3'
-								onChange={handleChange}
-							/>
-							<label title='text'>3 stars</label>
-							<input
-								type='radio'
-								id='star2'
-								name='rating'
-								value='2'
-								onChange={handleChange}
-							/>
-							<label title='text'>2 stars</label>
-							<input
-								type='radio'
-								id='star1'
-								name='rating'
-								value='1'
-								onChange={handleChange}
-							/>
-							<label title='text'>1 star</label>
-						</wrapper>
-						<div className='review'>
-							{/* <p>Your review:</p> */}
-							<textarea
-								name='review'
-								className='review-text'
-								value={bookObj.review}
-								onChange={handleChange}
-							/>
-							<br />
-							<button type='submit'> 🖋️ </button>
+				<div className='reviewBox'>
+					<container className='leave-review'>
+						<div className='Average'>
+							<h4>Average Rating</h4>
+							{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
 						</div>
-					</form>
-				</container>
+						<h2>Leave a Review</h2>
+						<form onSubmit={handleSubmit} className='rating-form'>
+							{errText ? (
+								<p>Please leave a rating and review before submitting</p>
+							) : null}
+							{/* <p>Rating:</p> */}
+							<wrapper className='stars'>
+								<input
+									type='radio'
+									id='star5'
+									name='rating'
+									value='5'
+									onChange={handleChange}
+								/>
+								<label title='text'>5 stars</label>
+								<input
+									type='radio'
+									id='star4'
+									name='rating'
+									value='4'
+									onChange={handleChange}
+								/>
+								<label title='text'>4 stars</label>
+								<input
+									type='radio'
+									id='star3'
+									name='rating'
+									value='3'
+									onChange={handleChange}
+								/>
+								<label title='text'>3 stars</label>
+								<input
+									type='radio'
+									id='star2'
+									name='rating'
+									value='2'
+									onChange={handleChange}
+								/>
+								<label title='text'>2 stars</label>
+								<input
+									type='radio'
+									id='star1'
+									name='rating'
+									value='1'
+									onChange={handleChange}
+								/>
+								<label title='text'>1 star</label>
+							</wrapper>
+							<br />
+							<div className='review'>
+								{/* <p>Your review:</p> */}
+								<textarea
+									name='review'
+									className='review-text'
+									value={bookObj.review}
+									onChange={handleChange}
+								/>
+								<br />
+								<button type='submit'> 🖋️ </button>
+							</div>
+						</form>
+					</container>
+				</div>
 				<div className='pastReviews'>
 					<h4>Reviews</h4>
 					{!reviews.length ? (
