@@ -1,29 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-const GoogleBook = ({ match, bookDetail, setBookDetails }) => {
+const GoogleBook = ({ bookDetail, setBookDetails }) => {
 	const history = useHistory();
-	const bookTitle = match.params.title;
+	const bookTitle = bookDetail.title;
 	const [reviews, setReviews] = useState([]);
 	const [ratings, setRatings] = useState([]);
-	const [bookObj, setBookObj] = useState({
-		title: bookTitle,
-		review: '',
-		rating: '',
-	});
+	const [formState, setFormState] = useState({ review: '', rating: '' });
 	const [error, setError] = useState(false);
 	const [errText, setErrText] = useState(false);
 	const [avgRating, setAvgRating] = useState(0);
+	const [editState, setEditState] = useState(-1);
+	const [editText, setEditText] = useState('');
 
 	useEffect(() => {
-		// if (books.length) {
-		// 	books.forEach((book, i) => {
-		// 		if (book.title === bookTitle) {
-		// 			setBookDetails(books[i]);
-		// 		}
-		// 	});
-
-		if (localStorage.getItem('book')) {
+		if (localStorage.getItem('book') && !bookDetail) {
 			const newBook = localStorage.getItem('book');
 			setBookDetails(JSON.parse(newBook));
 		}
@@ -38,7 +29,7 @@ const GoogleBook = ({ match, bookDetail, setBookDetails }) => {
 				}
 			})
 			.catch();
-	}, []);
+	}, [bookDetail]);
 
 	useEffect(() => {
 		if (ratings.length === 1) {
@@ -48,28 +39,59 @@ const GoogleBook = ({ match, bookDetail, setBookDetails }) => {
 		}
 	}, [ratings, reviews]);
 
-	const handleChange = (event) => {
-		setBookObj({ ...bookObj, [event.target.name]: event.target.value });
-	};
-
-	const handleSubmit = (event) => {
-		if (!bookObj.review || !bookObj.rating) {
-			setErrText(true);
-			return;
-		}
+	const submitBook = (bookReviews, bookRatings) => {
+		const payload = {
+			title: bookTitle,
+			reviews: [...bookReviews, formState.review],
+			ratings: [...bookRatings, formState.rating],
+		};
 		const url = `http://localhost:3000/api/books/title/${bookTitle}`;
 		fetch(url, {
 			method: 'PATCH',
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8',
 			},
-			body: JSON.stringify(bookObj),
+			body: JSON.stringify(payload),
 		})
 			.then((res) => res.json())
 			.then((data) => {
-				history.push(`/books/${data.title}`);
+				history.push(`/search/${data.title}`);
 			})
 			.catch((err) => setError(true));
+	};
+
+	const handleChange = (event) => {
+		setFormState({ ...formState, [event.target.name]: event.target.value });
+	};
+
+	const handleSubmit = (event) => {
+		if (!formState.review || !formState.rating) {
+			event.preventDefault();
+			setErrText(true);
+			return;
+		}
+		submitBook(reviews, ratings);
+	};
+
+	// if there is no empty string on the end of reviews, this will create it, but not more than one
+	// submitting a new review will overwrite the empty string with the created review
+	const handleEdit = (reviewIndex) => {
+		let newReviews = [...reviews];
+		newReviews[reviewIndex] = editText;
+
+		setReviews(newReviews);
+		setEditState(-1);
+
+		submitBook(newReviews, ratings);
+	};
+
+	const handleDelete = (reviewIndex) => {
+		let newReviews = [...reviews];
+		newReviews.splice(reviewIndex, 1);
+
+		setReviews(newReviews);
+
+		submitBook(newReviews, ratings);
 	};
 
 	return (
@@ -144,7 +166,7 @@ const GoogleBook = ({ match, bookDetail, setBookDetails }) => {
 							name='review'
 							type='text'
 							className='review-text'
-							value={bookObj.review}
+							value={formState.review}
 							onChange={handleChange}
 						/>
 						<button type='submit'>Submit</button>
@@ -161,7 +183,35 @@ const GoogleBook = ({ match, bookDetail, setBookDetails }) => {
 			{!reviews.length ? (
 				<p>Please leave a review</p>
 			) : (
-				reviews.map((review, i) => <p key={i}>{review}</p>)
+				reviews.map((review, i) =>
+					editState === i ? (
+						<div key={i}>
+							<input
+								type='text'
+								value={editText}
+								onChange={(e) => setEditText(e.target.value)}
+							/>
+							<button onClick={() => handleEdit(i)}>Submit</button>
+						</div>
+					) : (
+						<div key={i}>
+							<p>{review}</p>
+							<button
+								onClick={() => {
+									setEditState(i);
+									setEditText(review);
+								}}>
+								Edit
+							</button>
+							<button
+								onClick={() => {
+									handleDelete(i);
+								}}>
+								Delete
+							</button>
+						</div>
+					)
+				)
 			)}
 		</section>
 	);

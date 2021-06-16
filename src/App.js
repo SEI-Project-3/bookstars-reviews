@@ -18,7 +18,6 @@ function App() {
 		)
 			.then((res) => res.json())
 			.then((res) => {
-				console.log(res.results);
 				setBooks(res.results.books);
 			})
 			.catch();
