@@ -32,8 +32,9 @@ const Header = ({ setBookDetails, bookDetail, history }) => {
 				<Link to='/'>
 					<img src={Logo} alt='Bookstars' className='logo' />
 				</Link>
-
-				<form className='searchbar' onSubmit={handleSubmit}>
+			</div>
+			<nav>
+				<form onSubmit={handleSubmit}>
 					<input
 						type='text'
 						name='search'
@@ -41,10 +42,8 @@ const Header = ({ setBookDetails, bookDetail, history }) => {
 						className='inputSearch'
 						placeholder='Search for a book'
 					/>
-					<input className='searchButton' type='submit' value='🔍' />
+					<input type='submit' value='Search' />
 				</form>
-			</div>
-			<nav>
 				<Link to={`/fiction`} className='navLinks'>
 					Fiction
 				</Link>
