@@ -15,7 +15,7 @@ const Header = ({ setBookDetails, bookDetail, history }) => {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		fetch(
-			`https://www.googleapis.com/books/v1/volumes?q=intitle:${bookState}&key=AIzaSyCbwixLUo_AQ7vhv3MnioBwURJEZ3n8jng`
+			`https://www.googleapis.com/books/v1/volumes?q=intitle:${bookState}&key=${process.env.REACT_APP_GOOG_BOOKS_API_KEY}`
 		)
 			.then((res) => res.json())
 			.then((res) => {
