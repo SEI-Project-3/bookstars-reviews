@@ -36,7 +36,7 @@ function App() {
 				)}
 			/>
 			<main>
-				<Route path='/' exact render={() => <Gallery />} />
+				{/* <Route path='/' exact render={() => <Gallery />} /> */}
 				<Route
 					path='/'
 					exact

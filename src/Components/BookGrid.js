@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import './Styles/BookGrid.css';
 
 const BookGrid = ({ extra, setExtra, setBooks, books, match }) => {
 	let genreUrl = '';
@@ -42,17 +43,24 @@ const BookGrid = ({ extra, setExtra, setBooks, books, match }) => {
 	}, [extra]);
 
 	return (
-		<section>
-			{!books
-				? null
-				: books.map((book) => (
-						<Link to={`/books/${book.title}`} key={book.title}>
-							<h4>{book.title}</h4>
-							<h6>{book.author}</h6>
-							<img src={book.book_image} alt={book.title} />
-						</Link>
-				  ))}
-		</section>
+		<>
+			<wrapper className='welcome'>
+				<h1>Welcome</h1> <br />
+			</wrapper>
+			<section>
+				{!books
+					? null
+					: books.map((book) => (
+							<container className='book-card'>
+								<Link to={`/books/${book.title}`} key={book.title}>
+									<h3>{book.title}</h3>
+									<img src={book.book_image} alt={book.title} />
+									<h4>{book.author}</h4>
+								</Link>
+							</container>
+					  ))}
+			</section>
+		</>
 	);
 };
 
