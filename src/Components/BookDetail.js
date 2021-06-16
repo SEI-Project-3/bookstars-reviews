@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import './Styles/BookDetail.css';
 import { useHistory } from 'react-router-dom';
-
 
 const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const history = useHistory();
@@ -105,94 +102,90 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 
 	return (
 		<section>
+			<button className='open-modal'>Leave a Review</button>
 			{!bookDetail ? null : (
-				<>
-					<img
-						className='cover'
-						src={bookDetail.book_image}
-						alt={bookDetail.title}
-					/>
-					<div className='book-detail'>
-						<h1>{bookDetail.title}</h1>
-						<h3>{bookDetail.author}</h3>
-						<p>{bookDetail.description}</p>
-						<a
-							href={bookDetail.amazon_product_url}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Buy on Amazon
-						</a>
+				<div className='book-detail'>
+					<h1>{bookDetail.title}</h1>
+					<h3>{bookDetail.author}</h3>
+					<img src={bookDetail.book_image} alt={bookDetail.title} />
+					<p>{bookDetail.description}</p>
+					<a
+						href={bookDetail.amazon_product_url}
+						target='_blank'
+						rel='noopener noreferrer'>
+						Buy on Amazon
+					</a>
+				</div>
+			)}
+			<div>
+				<form onSubmit={handleSubmit} className='rating-form'>
+					<h3>Leave a Review</h3>
+					{errText ? (
+						<p>Please leave a rating and review before submitting</p>
+					) : null}
+					<p>Rating:</p>
+					<div className='rate'>
+						<input
+							type='radio'
+							id='star5'
+							name='rating'
+							value='5'
+							onChange={handleChange}
+						/>
+						<label title='text'>5 stars</label>
+						<input
+							type='radio'
+							id='star4'
+							name='rating'
+							value='4'
+							onChange={handleChange}
+						/>
+						<label title='text'>4 stars</label>
+						<input
+							type='radio'
+							id='star3'
+							name='rating'
+							value='3'
+							onChange={handleChange}
+						/>
+						<label title='text'>3 stars</label>
+						<input
+							type='radio'
+							id='star2'
+							name='rating'
+							value='2'
+							onChange={handleChange}
+						/>
+						<label title='text'>2 stars</label>
+						<input
+							type='radio'
+							id='star1'
+							name='rating'
+							value='1'
+							onChange={handleChange}
+						/>
+						<label title='text'>1 star</label>
 					</div>
-
-					<aside className='leave-review'>
-						<h2>Leave a Review</h2>
-						<form onSubmit={handleSubmit} className='rating-form'>
-							{errText ? (
-								<p>Please leave a rating and review before submitting</p>
-							) : null}
-
-							<wrapper className='stars'>
-								<input
-									type='radio'
-									id='star5'
-									name='rating'
-									value='5'
-									onChange={handleChange}
-								/>
-								<label title='text'>5 stars</label>
-								<input
-									type='radio'
-									id='star4'
-									name='rating'
-									value='4'
-									onChange={handleChange}
-								/>
-								<label title='text'>4 stars</label>
-								<input
-									type='radio'
-									id='star3'
-									name='rating'
-									value='3'
-									onChange={handleChange}
-								/>
-								<label title='text'>3 stars</label>
-								<input
-									type='radio'
-									id='star2'
-									name='rating'
-									value='2'
-									onChange={handleChange}
-								/>
-								<label title='text'>2 stars</label>
-								<input
-									type='radio'
-									id='star1'
-									name='rating'
-									value='1'
-									onChange={handleChange}
-								/>
-								<label title='text'>1 star</label>
-							</wrapper>
-							<br />
-							<div className='Average'>
-								<h4>Average Rating</h4>
-								{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
-							</div>
-							<div className='review'>
-								<textarea
-									name='review'
-									className='review-text'
-									value={bookObj.review}
-									onChange={handleChange}
-								/>
-								<br />
-								<button type='submit'> 🖋️ </button>
-							</div>
-						</form>
-					</aside>
-				</>
-    <div className='past-reviews'>
-			<h3>Reviews</h3>
+					<div className='review'>
+						<p>Your review:</p>
+						<input
+							name='review'
+							type='text'
+							className='review-text'
+							value={formState.review}
+							onChange={handleChange}
+						/>
+						<button type='submit'>Submit</button>
+					</div>
+				</form>
+			</div>
+			<h4>Average Rating</h4>
+			{!ratings.length ? (
+				<p>This book has not yet been rated.</p>
+			) : (
+				<p>{avgRating}</p>
+			)}
+			<h4>Reviews</h4>
 			{!reviews.length ? (
 				<p>Please leave a review</p>
 			) : (
@@ -225,7 +218,7 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 						</div>
 					)
 				)
-        </div>
+			)}
 		</section>
 	);
 };
