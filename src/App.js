@@ -5,10 +5,12 @@ import Header from './Components/Header';
 import Gallery from './Components/Gallery';
 import BookGrid from './Components/BookGrid';
 import BookDetail from './Components/BookDetail';
+import GoogleBook from './Components/GoogleBook';
 
 function App() {
 	const [books, setBooks] = useState([]);
 	const [bookDetail, setBookDetails] = useState('');
+	const [extra, setExtra] = useState('');
 
 	useEffect(() => {
 		fetch(
