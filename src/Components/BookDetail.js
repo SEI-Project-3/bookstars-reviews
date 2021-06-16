@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Styles/BookDetail.css';
 
 const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
@@ -7,14 +7,12 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const bookTitle = match.params.title;
 	const [reviews, setReviews] = useState([]);
 	const [ratings, setRatings] = useState([]);
-	const [bookObj, setBookObj] = useState({
-		title: bookTitle,
-		review: '',
-		rating: '',
-	});
+	const [formState, setFormState] = useState({ review: '', rating: '' });
 	const [error, setError] = useState(false);
 	const [errText, setErrText] = useState(false);
 	const [avgRating, setAvgRating] = useState(0);
+	const [editState, setEditState] = useState(-1);
+	const [editText, setEditText] = useState('');
 
 	useEffect(() => {
 		if (books.length) {
@@ -24,7 +22,8 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 					localStorage.setItem('book', JSON.stringify(books[i]));
 				}
 			});
-
+			//http://localhost:3000/api/books/title/${bookTitle}
+			//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
 			fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
 				.then((res) => res.json())
 				.then((res) => {
@@ -50,22 +49,21 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 		}
 	}, [ratings, reviews]);
 
-	const handleChange = (event) => {
-		setBookObj({ ...bookObj, [event.target.name]: event.target.value });
-	};
-
-	const handleSubmit = (event) => {
-		if (!bookObj.review || !bookObj.rating) {
-			setErrText(true);
-			return;
-		}
+	const submitBook = (bookReviews, bookRatings) => {
+		const payload = {
+			title: bookTitle,
+			reviews: [...bookReviews, formState.review],
+			ratings: [...bookRatings, formState.rating],
+		};
+		//http://localhost:3000/api/books/title/${bookTitle}
+		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
 		const url = `http://localhost:3000/api/books/title/${bookTitle}`;
 		fetch(url, {
 			method: 'PATCH',
 			headers: {
 				'Content-type': 'application/json; charset=UTF-8',
 			},
-			body: JSON.stringify(bookObj),
+			body: JSON.stringify(payload),
 		})
 			.then((res) => res.json())
 			.then((data) => {
@@ -74,100 +72,157 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			.catch((err) => setError(true));
 	};
 
+	const handleChange = (event) => {
+		setFormState({ ...formState, [event.target.name]: event.target.value });
+	};
+
+	const handleSubmit = (event) => {
+		if (!formState.review || !formState.rating) {
+			event.preventDefault();
+			setErrText(true);
+			return;
+		}
+		submitBook(reviews, ratings);
+	};
+
+	const handleEdit = (reviewIndex) => {
+		let newReviews = [...reviews];
+		newReviews[reviewIndex] = editText;
+
+		setReviews(newReviews);
+		setEditState(-1);
+
+		submitBook(newReviews, ratings);
+	};
+
+	const handleDelete = (reviewIndex) => {
+		let newReviews = [...reviews];
+		newReviews.splice(reviewIndex, 1);
+
+		setReviews(newReviews);
+
+		submitBook(newReviews, ratings);
+	};
+
 	return (
-		<>
-			<section>
-				{/* <button className='open-modal'>Leave a Review</button> */}
-				{!bookDetail ? null : (
-					<aside className='book-detail'>
-						<h1>{bookDetail.title}</h1>
-						<h3>{bookDetail.author}</h3>
-						<img src={bookDetail.book_image} alt={bookDetail.title} />
-						<p>{bookDetail.description}</p>
-						<a
-							href={bookDetail.amazon_product_url}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Buy on Amazon
-						</a>
-					</aside>
-				)}
-				<container className='leave-review'>
-					<div className='Average'>
-						<h4>Average Rating</h4>
-						{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
-					</div>
-					<h2>Leave a Review</h2>
-					<form onSubmit={handleSubmit} className='rating-form'>
-						{errText ? (
-							<p>Please leave a rating and review before submitting</p>
-						) : null}
-						{/* <p>Rating:</p> */}
-						<wrapper className='stars'>
-							<input
-								type='radio'
-								id='star5'
-								name='rating'
-								value='5'
-								onChange={handleChange}
-							/>
-							<label title='text'>5 stars</label>
-							<input
-								type='radio'
-								id='star4'
-								name='rating'
-								value='4'
-								onChange={handleChange}
-							/>
-							<label title='text'>4 stars</label>
-							<input
-								type='radio'
-								id='star3'
-								name='rating'
-								value='3'
-								onChange={handleChange}
-							/>
-							<label title='text'>3 stars</label>
-							<input
-								type='radio'
-								id='star2'
-								name='rating'
-								value='2'
-								onChange={handleChange}
-							/>
-							<label title='text'>2 stars</label>
-							<input
-								type='radio'
-								id='star1'
-								name='rating'
-								value='1'
-								onChange={handleChange}
-							/>
-							<label title='text'>1 star</label>
-						</wrapper>
-						<div className='review'>
-							{/* <p>Your review:</p> */}
-							<textarea
-								name='review'
-								className='review-text'
-								value={bookObj.review}
-								onChange={handleChange}
-							/>
-							<br />
-							<button type='submit'>Submit</button>
-						</div>
-					</form>
-				</container>
-				<div className='pastReviews'>
-					<h4>Reviews</h4>
-					{!reviews.length ? (
-						<p>Please leave a review</p>
-					) : (
-						reviews.map((review, i) => <p key={i}>{review}</p>)
-					)}
+		<section>
+			{!bookDetail ? null : (
+				<div className='book-detail'>
+					<h1>{bookDetail.title}</h1>
+					<h3>{bookDetail.author}</h3>
+					<img src={bookDetail.book_image} alt={bookDetail.title} />
+					<p>{bookDetail.description}</p>
+					<a
+						href={bookDetail.amazon_product_url}
+						target='_blank'
+						rel='noopener noreferrer'>
+						Buy on Amazon
+					</a>
 				</div>
-			</section>
-		</>
+			)}
+			<div>
+				<form onSubmit={handleSubmit} className='rating-form'>
+					<h3>Leave a Review</h3>
+					{errText ? (
+						<p>Please leave a rating and review before submitting</p>
+					) : null}
+					<p>Rating:</p>
+					<div className='rate'>
+						<input
+							type='radio'
+							id='star5'
+							name='rating'
+							value='5'
+							onChange={handleChange}
+						/>
+						<label title='text'>5 stars</label>
+						<input
+							type='radio'
+							id='star4'
+							name='rating'
+							value='4'
+							onChange={handleChange}
+						/>
+						<label title='text'>4 stars</label>
+						<input
+							type='radio'
+							id='star3'
+							name='rating'
+							value='3'
+							onChange={handleChange}
+						/>
+						<label title='text'>3 stars</label>
+						<input
+							type='radio'
+							id='star2'
+							name='rating'
+							value='2'
+							onChange={handleChange}
+						/>
+						<label title='text'>2 stars</label>
+						<input
+							type='radio'
+							id='star1'
+							name='rating'
+							value='1'
+							onChange={handleChange}
+						/>
+						<label title='text'>1 star</label>
+					</div>
+					<div className='review'>
+						<p>Your review:</p>
+						<input
+							name='review'
+							type='text'
+							className='review-text'
+							value={formState.review}
+							onChange={handleChange}
+						/>
+						<button type='submit'>Submit</button>
+					</div>
+				</form>
+			</div>
+			<h4>Average Rating</h4>
+			{!ratings.length ? (
+				<p>This book has not yet been rated.</p>
+			) : (
+				<p>{avgRating}</p>
+			)}
+			<h4>Reviews</h4>
+			{!reviews.length ? (
+				<p>Please leave a review</p>
+			) : (
+				reviews.map((review, i) =>
+					editState === i ? (
+						<div key={i}>
+							<input
+								type='text'
+								value={editText}
+								onChange={(e) => setEditText(e.target.value)}
+							/>
+							<button onClick={() => handleEdit(i)}>Submit</button>
+						</div>
+					) : (
+						<div key={i}>
+							<p>{review}</p>
+							<button
+								onClick={() => {
+									setEditState(i);
+									setEditText(review);
+								}}>
+								Edit
+							</button>
+							<button
+								onClick={() => {
+									handleDelete(i);
+								}}>
+								Delete
+							</button>
+						</div>
+					)
+				)
+			)}
+		</section>
 	);
 };
 
