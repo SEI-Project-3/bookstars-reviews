@@ -21,7 +21,8 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 					localStorage.setItem('book', JSON.stringify(books[i]));
 				}
 			});
-
+			//http://localhost:3000/api/books/title/${bookTitle}
+			//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
 			fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
 				.then((res) => res.json())
 				.then((res) => {
@@ -53,6 +54,8 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			reviews: [...bookReviews, formState.review],
 			ratings: [...bookRatings, formState.rating],
 		};
+		//http://localhost:3000/api/books/title/${bookTitle}
+		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
 		const url = `http://localhost:3000/api/books/title/${bookTitle}`;
 		fetch(url, {
 			method: 'PATCH',
@@ -102,7 +105,6 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 
 	return (
 		<section>
-			<button className='open-modal'>Leave a Review</button>
 			{!bookDetail ? null : (
 				<div className='book-detail'>
 					<h1>{bookDetail.title}</h1>
