@@ -13,8 +13,10 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const [avgRating, setAvgRating] = useState(0);
 	const [editState, setEditState] = useState(-1);
 	const [editText, setEditText] = useState('');
+	const [newState, setNewState] = useState(false);
 
 	useEffect(() => {
+		console.log('first use eff');
 		if (books.length) {
 			books.forEach((book, i) => {
 				if (book.title === bookTitle) {
@@ -24,7 +26,9 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			});
 			//http://localhost:3000/api/books/title/${bookTitle}
 			//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
-			fetch(`http://localhost:3000/api/books/title/${bookTitle}`)
+			fetch(
+				`https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`
+			)
 				.then((res) => res.json())
 				.then((res) => {
 					if (res?.ratings) {
@@ -39,9 +43,10 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 			const newBook = localStorage.getItem('book');
 			setBookDetails(JSON.parse(newBook));
 		}
-	}, [books]);
+	}, [books, newState]);
 
 	useEffect(() => {
+		console.log('2nd use');
 		if (ratings.length === 1) {
 			setAvgRating(ratings[0]);
 		} else if (ratings.length > 1) {
@@ -49,40 +54,61 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 		}
 	}, [ratings, reviews]);
 
-	const submitBook = (bookReviews, bookRatings) => {
-		const payload = {
-			title: bookTitle,
-			reviews: [...bookReviews, formState.review],
-			ratings: [...bookRatings, formState.rating],
-		};
-		//http://localhost:3000/api/books/title/${bookTitle}
-		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
-		const url = `http://localhost:3000/api/books/title/${bookTitle}`;
-		fetch(url, {
-			method: 'PATCH',
-			headers: {
-				'Content-type': 'application/json; charset=UTF-8',
-			},
-			body: JSON.stringify(payload),
-		})
-			.then((res) => res.json())
-			.then((data) => {
-				history.push(`/books/${data.title}`);
-			})
-			.catch((err) => setError(true));
-	};
+	// const submitBook = (bookReviews, bookRatings) => {
+	// 	const payload = {
+	// 		title: bookTitle,
+	// 		reviews: [...bookReviews, formState.review],
+	// 		ratings: [...bookRatings, formState.rating],
+	// 	};
+	// 	//http://localhost:3000/api/books/title/${bookTitle}
+	// 	//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
+	// 	const url = `https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`;
+	// 	fetch(url, {
+	// 		method: 'PATCH',
+	// 		headers: {
+	// 			'Content-Type': 'application/json; charset=UTF-8',
+	// 		},
+	// 		body: JSON.stringify(payload),
+	// 	})
+	// 		.then((res) => res.json())
+	// 		.then((data) => {
+	// 			console.log('we sent shit');
+	// 		})
+	// 		.catch((err) => setError(true));
+	// };
 
 	const handleChange = (event) => {
 		setFormState({ ...formState, [event.target.name]: event.target.value });
 	};
 
 	const handleSubmit = (event) => {
+		event.preventDefault();
 		if (!formState.review || !formState.rating) {
-			event.preventDefault();
 			setErrText(true);
 			return;
 		}
-		submitBook(reviews, ratings);
+		console.log('submitted');
+		//submitBook(reviews, ratings);
+		const payload = {
+			title: bookTitle,
+			reviews: [...reviews, formState.review],
+			ratings: [...ratings, formState.rating],
+		};
+		//http://localhost:3000/api/books/title/${bookTitle}
+		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
+		const url = `https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`;
+		fetch(url, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+			},
+			body: JSON.stringify(payload),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setNewState(!newState);
+			})
+			.catch((err) => setError(true));
 	};
 
 	const handleEdit = (reviewIndex) => {
@@ -92,16 +118,56 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 		setReviews(newReviews);
 		setEditState(-1);
 
-		submitBook(newReviews, ratings);
+		//submitBook(newReviews, ratings);
+		const payload = {
+			title: bookTitle,
+			reviews: [...newReviews, formState.review],
+			ratings: [...ratings, formState.rating],
+		};
+		//http://localhost:3000/api/books/title/${bookTitle}
+		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
+		const url = `https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`;
+		fetch(url, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+			},
+			body: JSON.stringify(payload),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log('we sent shit');
+			})
+			.catch((err) => setError(true));
 	};
 
 	const handleDelete = (reviewIndex) => {
 		let newReviews = [...reviews];
 		newReviews.splice(reviewIndex, 1);
-
+		console.log(newReviews);
 		setReviews(newReviews);
 
-		submitBook(newReviews, ratings);
+		//submitBook(newReviews, ratings);
+		const payload = {
+			title: bookTitle,
+			reviews: [...newReviews, formState.review],
+			ratings: [...ratings, formState.rating],
+		};
+		//http://localhost:3000/api/books/title/${bookTitle}
+		//https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}
+		const url = `https://glacial-tundra-96946.herokuapp.com/api/books/title/${bookTitle}`;
+		fetch(url, {
+			method: 'PATCH',
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+			},
+			body: JSON.stringify(payload),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				console.log('we sent shit');
+			})
+			.catch((err) => setError(true));
 	};
 
 	return (

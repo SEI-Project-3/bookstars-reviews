@@ -14,7 +14,7 @@ function App() {
 
 	useEffect(() => {
 		fetch(
-			'https://api.nytimes.com/svc/books/v3/lists/current/combined-print-fiction.json?api-key=Har2JGxlbuOpjx3lnsMAWb4MPCzfGO3u'
+			`https://api.nytimes.com/svc/books/v3/lists/current/combined-print-fiction.json?api-key=${process.env.REACT_APP_NY_TIMES_API_KEY}`
 		)
 			.then((res) => res.json())
 			.then((res) => {
