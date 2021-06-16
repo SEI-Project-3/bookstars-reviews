@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import './Styles/BookDetail.css';
 
 const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const history = useHistory();
