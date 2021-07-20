@@ -1,0 +1,141 @@
+@import url('//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css');
+* {
+	margin: 0;
+	padding: 0;
+}
+.stars {
+	float: left;
+	height: 36px;
+	padding: 0 10px;
+}
+.stars:not(:checked) > input {
+	position: absolute;
+	top: -9999px;
+}
+.stars:not(:checked) > label {
+	float: right;
+	width: 1em;
+	overflow: hidden;
+	white-space: nowrap;
+	cursor: pointer;
+	font-size: 30px;
+	color: #8b837f;
+}
+.stars:not(:checked) > label:before {
+	content: '★ ';
+}
+.stars > input:checked ~ label {
+	color: #474544;
+}
+.stars:not(:checked) > label:hover,
+.stars:not(:checked) > label:hover ~ label {
+	color: #474544;
+}
+.stars > input:checked + label:hover,
+.stars > input:checked + label:hover ~ label,
+.stars > input:checked ~ label:hover,
+.stars > input:checked ~ label:hover ~ label,
+.stars > label:hover ~ input:checked ~ label {
+	color: #474544;
+}
+
+/* ==== ^ RATINGS ^ ==== */
+
+/* whole page  */
+.BookDetail {
+	width: 100vh;
+	height: 100vh;
+}
+
+/* === */
+
+section {
+	width: 100%;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 400px auto;
+	justify-content: center;
+	column-gap: 5px;
+	row-gap: 35px;
+	align-items: start;
+}
+
+/* == LEFT TOP == */
+
+.cover {
+	grid-column: 1;
+	grid-row: 1;
+	height: 400px;
+	margin-right: 25px;
+}
+
+.cover img {
+	border: 5px solid #71aca0;
+	border-radius: 10px;
+	background-color: #81b7ac;
+}
+
+/* == RIGHT TOP == */
+
+.details {
+	grid-column: 2 / span 2;
+	grid-row: 1;
+	height: 385px;
+
+	border: 15px solid #e6e2e0;
+	background-color: #e6e2e0;
+	border-radius: 15px;
+}
+
+/* == RIGHT BOTTOM == */
+
+.leave-review {
+	/* border: 2px solid #71aca0; */
+	width: 325px;
+	height: 400px;
+	justify-self: end;
+	margin-left: 25px;
+
+	grid-column: 3;
+	grid-row: 2;
+}
+.rating-form {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: ;
+}
+.leave-review-title {
+}
+.wrapper {
+}
+.average {
+}
+.average-title {
+}
+.average-rate {
+}
+
+.review {
+	width: 94%;
+}
+
+/* == LEFT BOTTOM == */
+
+.history {
+	border: 2px solid #71aca0;
+	grid-column: 1 / span 2;
+	grid-row: 2;
+	margin-right: 3%;
+}
+.past-reviews-title {
+	letter-spacing: 4px;
+	font-size: 14pt;
+	padding: 1%;
+	margin: 1%;
+}
+.one-review p {
+	background-color: #e6e2e0;
+	border-radius: 15px;
+	padding: 1%;
+	margin: 1%;
+}

@@ -120,14 +120,12 @@ section {
 	padding: 2%;
 }
 
-.Average {
+.average {
 	padding: 3%;
 }
 
 .leave-review form {
 	width: 100%;
-	display: flex;
-	flex-flow: column nowrap;
 	padding: 1%;
 }
 
@@ -179,4 +177,13 @@ section {
 	margin: 1%;
 	background-color: #e6e2e0;
 	border-radius: 15px;
+}
+
+.past-reviews button {
+	padding: 1%;
+	font-size: 25px;
+	background-color: #e6e2e0;
+	border: none;
+	border-radius: 25px;
+	align-self: flex-end;
 }

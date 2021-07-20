@@ -5,12 +5,10 @@ import Header from './Components/Header';
 import Gallery from './Components/Gallery';
 import BookGrid from './Components/BookGrid';
 import BookDetail from './Components/BookDetail';
-import GoogleBook from './Components/GoogleBook';
 
 function App() {
 	const [books, setBooks] = useState([]);
 	const [bookDetail, setBookDetails] = useState('');
-	const [extra, setExtra] = useState('');
 
 	useEffect(() => {
 		fetch(
@@ -18,6 +16,7 @@ function App() {
 		)
 			.then((res) => res.json())
 			.then((res) => {
+				console.log(res.results);
 				setBooks(res.results.books);
 			})
 			.catch();
@@ -25,66 +24,24 @@ function App() {
 
 	return (
 		<div className='App'>
+			<Route path='/' render={() => <Header />} />
+			<Route path='/' exact render={() => <Gallery />} />
+			<Route path='/' exact render={() => <BookGrid books={books} />} />
+			{/* <Route
+				path='/:genre'
+				render={() => <BookGrid books={books} setBooks={setBooks} />}
+			/> */}
 			<Route
-				path='/'
+				path='/books/:title'
 				render={(routerProps) => (
-					<Header
+					<BookDetail
+						books={books}
 						bookDetail={bookDetail}
 						setBookDetails={setBookDetails}
-						{...routerProps}
+						match={routerProps.match}
 					/>
 				)}
 			/>
-			<main>
-				{/* <Route path='/' exact render={() => <Gallery />} /> */}
-				<Route
-					path='/'
-					exact
-					render={() => (
-						<BookGrid
-							books={books}
-							setBooks={setBooks}
-							extra={extra}
-							setExtra={setExtra}
-						/>
-					)}
-				/>
-				<Route
-					path='/:genre'
-					exact
-					render={(routerProps) => (
-						<BookGrid
-							match={routerProps.match}
-							books={books}
-							setBooks={setBooks}
-							extra={extra}
-							setExtra={setExtra}
-						/>
-					)}
-				/>
-				<Route
-					path='/books/:title'
-					render={(routerProps) => (
-						<BookDetail
-							books={books}
-							bookDetail={bookDetail}
-							setBookDetails={setBookDetails}
-							match={routerProps.match}
-						/>
-					)}
-				/>
-				<Route
-					exact
-					path='/search/:title'
-					render={(routerProps) => (
-						<GoogleBook
-							bookDetail={bookDetail}
-							setBookDetails={setBookDetails}
-							match={routerProps.match}
-						/>
-					)}
-				/>
-			</main>
 		</div>
 	);
 }

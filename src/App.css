@@ -80,3 +80,20 @@ h1 {
 	font-size: 32pt;
 	font-weight: lighter;
 }
+
+button {
+	/* background-color: none;
+	transition: background 400ms ease-in-out; */
+	padding: 5px;
+	border-radius: 5px;
+	outline: none;
+	border: none;
+	margin: 1%;
+	color: #474544;
+}
+
+button:hover,
+button:active {
+	background-color: #b1d8d0;
+	transition: background 400ms ease-in-out;
+}

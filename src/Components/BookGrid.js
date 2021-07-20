@@ -37,6 +37,7 @@ const BookGrid = ({ extra, setExtra, setBooks, books, match }) => {
 		)
 			.then((res) => res.json())
 			.then((res) => {
+				console.log(genreUrl);
 				setBooks(res.results.books);
 			})
 			.catch();

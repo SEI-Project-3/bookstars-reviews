@@ -9,7 +9,7 @@
 .book-card container {
 	display: flex;
 	flex-flow: row wrap;
-	justify-content: space-around;
+	align-content: space-around;
 }
 
 .book-card a {
@@ -27,7 +27,7 @@
 }
 
 .book-card img {
-	height: 300px;
+	width: 80%;
 	padding: 2%;
 	border: 3px solid #71aca0;
 	border-radius: 10px;
