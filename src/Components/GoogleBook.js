@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import './Styles/GoogleBook.css';
 
 const GoogleBook = ({ bookDetail, setBookDetails }) => {
 	const history = useHistory();
@@ -97,73 +96,29 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 
 	return (
 		<section>
+			<button className='open-modal'>Leave a Review</button>
 			{!bookDetail ? null : (
-				<>
-					<img
-						className='cover'
-						src={bookDetail.imageLinks.thumbnail}
-						alt={bookDetail.title}
-					/>
-					<div className='details'>
-						<h1>{bookDetail.title}</h1>
-						<h3>{bookDetail.authors[0]}</h3>
-						<p className='desc'>{bookDetail.description}</p>
-						<a
-							href={bookDetail.infoLink}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Check out on Google
-						</a>
-					</div>
-				</>
-			)}
-			<div className='history'>
-				<h4 className='past-reviews-title'>Reviews</h4>
-				<div className='one-review'>
-					{!reviews.length ? (
-						<p>Please leave a review</p>
-					) : (
-						reviews.map((review, i) =>
-							editState === i ? (
-								<div key={i}>
-									<input
-										type='text'
-										value={editText}
-										onChange={(e) => setEditText(e.target.value)}
-									/>
-									<button onClick={() => handleEdit(i)}>📨</button>
-								</div>
-							) : (
-								<div key={i}>
-									<p className='review-body'>{review}</p>
-									<button
-										className='edit'
-										onClick={() => {
-											setEditState(i);
-											setEditText(review);
-										}}>
-										📝
-									</button>
-									<button
-										className='delete'
-										onClick={() => {
-											handleDelete(i);
-										}}>
-										🗑️
-									</button>
-								</div>
-							)
-						)
-					)}
+				<div className='book-detail'>
+					<h1>{bookDetail.title}</h1>
+					<h3>{bookDetail.authors[0]}</h3>
+					<img src={bookDetail.imageLinks.thumbnail} alt={bookDetail.title} />
+					<p>{bookDetail.description}</p>
+					<a
+						href={bookDetail.infoLink}
+						target='_blank'
+						rel='noopener noreferrer'>
+						Check out on Google
+					</a>
 				</div>
-			</div>
-			<aside className='leave-review'>
+			)}
+			<div>
 				<form onSubmit={handleSubmit} className='rating-form'>
-					<h2 className='leave-review-title'>Leave a Review</h2>
+					<h3>Leave a Review</h3>
 					{errText ? (
 						<p>Please leave a rating and review before submitting</p>
 					) : null}
-					<wrapper className='stars'>
+					<p>Rating:</p>
+					<div className='rate'>
 						<input
 							type='radio'
 							id='star5'
@@ -180,7 +135,7 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 							onChange={handleChange}
 						/>
 						<label title='text'>4 stars</label>
-						<input 
+						<input
 							type='radio'
 							id='star3'
 							name='rating'
@@ -204,30 +159,60 @@ const GoogleBook = ({ bookDetail, setBookDetails }) => {
 							onChange={handleChange}
 						/>
 						<label title='text'>1 star</label>
-					</wrapper>
-					<br />
-					<br />
-					<div className='average'>
-						<h4 className='average-title'>Average Rating</h4>
-						{!ratings.length ? (
-							<p className='average-rate'>This book has not yet been rated.</p>
-						) : (
-							<p className='average-rate'>{avgRating}</p>
-						)}
 					</div>
 					<div className='review'>
-						<textarea
+						<p>Your review:</p>
+						<input
 							name='review'
 							type='text'
 							className='review-text'
 							value={formState.review}
 							onChange={handleChange}
 						/>
-						<button type='submit'>🖋️</button>
+						<button type='submit'>Submit</button>
 					</div>
 				</form>
-			</aside>
-			<br />
+			</div>
+			<h4>Average Rating</h4>
+			{!ratings.length ? (
+				<p>This book has not yet been rated.</p>
+			) : (
+				<p>{avgRating}</p>
+			)}
+			<h4>Reviews</h4>
+			{!reviews.length ? (
+				<p>Please leave a review</p>
+			) : (
+				reviews.map((review, i) =>
+					editState === i ? (
+						<div key={i}>
+							<input
+								type='text'
+								value={editText}
+								onChange={(e) => setEditText(e.target.value)}
+							/>
+							<button onClick={() => handleEdit(i)}>Submit</button>
+						</div>
+					) : (
+						<div key={i}>
+							<p>{review}</p>
+							<button
+								onClick={() => {
+									setEditState(i);
+									setEditText(review);
+								}}>
+								Edit
+							</button>
+							<button
+								onClick={() => {
+									handleDelete(i);
+								}}>
+								Delete
+							</button>
+						</div>
+					)
+				)
+			)}
 		</section>
 	);
 };

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import './Styles/BookDetail.css';
 
 const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 	const history = useHistory();
@@ -103,35 +102,29 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 
 	return (
 		<section>
+			<button className='open-modal'>Leave a Review</button>
 			{!bookDetail ? null : (
-				<>
-					<img
-						className='cover'
-						src={bookDetail.book_image}
-						alt={bookDetail.title}
-					/>
-					<div className='book-detail'>
-						<h1>{bookDetail.title}</h1>
-						<h3>{bookDetail.author}</h3>
-						<p>{bookDetail.description}</p>
-						<a
-							href={bookDetail.amazon_product_url}
-							target='_blank'
-							rel='noopener noreferrer'>
-							Buy on Amazon
-						</a>
-					</div>
-				</>
+				<div className='book-detail'>
+					<h1>{bookDetail.title}</h1>
+					<h3>{bookDetail.author}</h3>
+					<img src={bookDetail.book_image} alt={bookDetail.title} />
+					<p>{bookDetail.description}</p>
+					<a
+						href={bookDetail.amazon_product_url}
+						target='_blank'
+						rel='noopener noreferrer'>
+						Buy on Amazon
+					</a>
+				</div>
 			)}
-
-			<aside className='leave-review'>
-				<h2>Leave a Review</h2>
+			<div>
 				<form onSubmit={handleSubmit} className='rating-form'>
+					<h3>Leave a Review</h3>
 					{errText ? (
 						<p>Please leave a rating and review before submitting</p>
 					) : null}
-
-					<wrapper className='stars'>
+					<p>Rating:</p>
+					<div className='rate'>
 						<input
 							type='radio'
 							id='star5'
@@ -172,65 +165,60 @@ const BookDetail = ({ books, match, bookDetail, setBookDetails }) => {
 							onChange={handleChange}
 						/>
 						<label title='text'>1 star</label>
-					</wrapper>
-					<br />
-					<div className='average'>
-						<h4>Average Rating</h4>
-						{!ratings.length ? <p>Rate me!</p> : <p>{avgRating}</p>}
 					</div>
 					<div className='review'>
-						<textarea
+						<p>Your review:</p>
+						<input
 							name='review'
+							type='text'
 							className='review-text'
 							value={formState.review}
 							onChange={handleChange}
 						/>
-						<br />
-						<button type='submit'> 🖋️ </button>
+						<button type='submit'>Submit</button>
 					</div>
 				</form>
-			</aside>
-
-			<div className='past-reviews'>
-				<h3>Reviews</h3>
-				<div className='one-review'>
-					{!reviews.length ? (
-						<p>Please leave a review</p>
-					) : (
-						reviews.map((review, i) =>
-							editState === i ? (
-								<div key={i}>
-									<input
-										type='text'
-										value={editText}
-										onChange={(e) => setEditText(e.target.value)}
-									/>
-									<button onClick={() => handleEdit(i)}>📨</button>
-								</div>
-							) : (
-								<div key={i}>
-									<p>{review}</p>
-									<button
-										className='edit'
-										onClick={() => {
-											setEditState(i);
-											setEditText(review);
-										}}>
-										📝
-									</button>
-									<button
-										className='delete'
-										onClick={() => {
-											handleDelete(i);
-										}}>
-										🗑️
-									</button>
-								</div>
-							)
-						)
-					)}
-				</div>
 			</div>
+			<h4>Average Rating</h4>
+			{!ratings.length ? (
+				<p>This book has not yet been rated.</p>
+			) : (
+				<p>{avgRating}</p>
+			)}
+			<h4>Reviews</h4>
+			{!reviews.length ? (
+				<p>Please leave a review</p>
+			) : (
+				reviews.map((review, i) =>
+					editState === i ? (
+						<div key={i}>
+							<input
+								type='text'
+								value={editText}
+								onChange={(e) => setEditText(e.target.value)}
+							/>
+							<button onClick={() => handleEdit(i)}>Submit</button>
+						</div>
+					) : (
+						<div key={i}>
+							<p>{review}</p>
+							<button
+								onClick={() => {
+									setEditState(i);
+									setEditText(review);
+								}}>
+								Edit
+							</button>
+							<button
+								onClick={() => {
+									handleDelete(i);
+								}}>
+								Delete
+							</button>
+						</div>
+					)
+				)
+			)}
 		</section>
 	);
 };
